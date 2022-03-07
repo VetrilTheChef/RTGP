@@ -1,0 +1,3 @@
+meshPath content/models/bunny.obj
+vertShaderPath content/shaders/vertex/dev.vert
+fragShaderPath content/shaders/fragment/dev.frag

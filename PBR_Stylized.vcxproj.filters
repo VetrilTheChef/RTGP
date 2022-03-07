@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\meshes">
+      <UniqueIdentifier>{23fdb42b-7132-4cd7-994c-0eff17cb01dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\meshes\interfaces">
+      <UniqueIdentifier>{c32ae394-a2d2-461c-a29e-118ff549383d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\meshes\includes">
+      <UniqueIdentifier>{83576a9b-a9e8-42ec-bb84-ebef2d1b1e10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\models">
+      <UniqueIdentifier>{172138f4-f87c-4837-899f-6719163cc4a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\models\interfaces">
+      <UniqueIdentifier>{d27d6f71-979d-4b9b-8cc5-cc5431e7b608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders">
+      <UniqueIdentifier>{44a7cd2e-1f88-476a-96a6-fb9e60d027da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders\programs">
+      <UniqueIdentifier>{0544f344-faee-45a9-8849-953369c9b22c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders\programs\interfaces">
+      <UniqueIdentifier>{b3466030-5fc0-4db0-8b5e-789c50ec26ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cameras">
+      <UniqueIdentifier>{926f93e5-0874-4f86-b93d-c4150afb1cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cameras\interfaces">
+      <UniqueIdentifier>{1014ae7b-4048-4d0e-8a57-30ed7b4b6b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders\loaders">
+      <UniqueIdentifier>{4282d395-8fa7-4e27-aae4-4609d5eeb22d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders\loaders\interfaces">
+      <UniqueIdentifier>{727342c2-2baf-4090-808c-ed58858b7014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lights">
+      <UniqueIdentifier>{21955ca5-e56c-498e-b636-d3844397acc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lights\interfaces">
+      <UniqueIdentifier>{13f51e92-f6c6-4a42-a28c-1797f2947b6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lights\includes">
+      <UniqueIdentifier>{1f74db68-53e0-4b5c-b558-69b8cb16262e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders\buffers">
+      <UniqueIdentifier>{73d14897-a736-4bcd-b0cc-5684717f261a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders\buffers\interfaces">
+      <UniqueIdentifier>{1950db8d-a86c-4052-b6f6-85bcbbf9c686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders\programs\includes">
+      <UniqueIdentifier>{e08bce38-bfff-423a-8b3c-8650cfc774b3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pbr_stylized.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\glad\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\meshes\MeshAssImp.cpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\models\Model.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shaders\programs\ShaderProgram.cpp">
+      <Filter>Source Files\shaders\programs</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cameras\CameraPerspective.cpp">
+      <Filter>Source Files\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shaders\loaders\FileShaderLoader.cpp">
+      <Filter>Source Files\shaders\loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="source\lights\PointLight.cpp">
+      <Filter>Source Files\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shaders\buffers\UniformBufferObject.cpp">
+      <Filter>Source Files\shaders\buffers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\glfw\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\meshes\MeshAssImp.h">
+      <Filter>Source Files\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\meshes\interfaces\IMesh.h">
+      <Filter>Source Files\meshes\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\meshes\includes\Vertex.h">
+      <Filter>Source Files\meshes\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\models\interfaces\IModel.h">
+      <Filter>Source Files\models\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\models\Model.h">
+      <Filter>Source Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shaders\programs\ShaderProgram.h">
+      <Filter>Source Files\shaders\programs</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shaders\programs\interfaces\IShaderProgram.h">
+      <Filter>Source Files\shaders\programs\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cameras\interfaces\ICamera.h">
+      <Filter>Source Files\cameras\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cameras\CameraPerspective.h">
+      <Filter>Source Files\cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shaders\loaders\interfaces\IShaderLoader.h">
+      <Filter>Source Files\shaders\loaders\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shaders\loaders\FileShaderLoader.h">
+      <Filter>Source Files\shaders\loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="source\lights\interfaces\ILight.h">
+      <Filter>Source Files\lights\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\lights\PointLight.h">
+      <Filter>Source Files\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="source\lights\includes\Lights.h">
+      <Filter>Source Files\lights\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shaders\buffers\UniformBufferObject.h">
+      <Filter>Source Files\shaders\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shaders\buffers\interfaces\IUniformBufferObject.h">
+      <Filter>Source Files\shaders\buffers\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shaders\programs\includes\MVPN.h">
+      <Filter>Source Files\shaders\programs\includes</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

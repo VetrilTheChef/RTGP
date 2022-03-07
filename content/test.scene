@@ -1,0 +1,3 @@
+meshPath content/models/cube.obj
+vertShaderPath content/shaders/vertex/test.vert
+fragShaderPath content/shaders/fragment/test.frag
