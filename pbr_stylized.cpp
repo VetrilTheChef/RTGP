@@ -3,7 +3,7 @@ PBR_Stylized
 
 author: Marco Moretti
 
-Personal Project for Real-Time Graphics Programming - a.a. 2020/2021
+Personal Project for Real-Time Graphics Programming - a.a. 2022/2023
 */
 
 /*
@@ -26,13 +26,13 @@ positive Z axis points "outside" the screen
 // THIS IS OPTIONAL AND NOT REQUIRED, ONLY USE THIS IF YOU DON'T WANT GLAD TO INCLUDE windows.h
 // GLAD will include windows.h for APIENTRY if it was not previously defined.
 // Make sure you have the correct definition for APIENTRY for platforms which define _WIN32 but don't use __stdcall
+
 #ifdef _WIN32
 #define APIENTRY __stdcall
 #endif
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
-#include <glm/gtc/type_ptr.hpp>
 
 // confirm that GLAD didn't include windows.h
 #ifdef _WINDOWS_
@@ -41,36 +41,43 @@ positive Z axis points "outside" the screen
 
 // Project includes
 
-#include <fstream>
 #include <iostream>
 #include <memory>
-#include <regex>
-#include <sstream>
 #include <string>
-#include "cameras/CameraPerspective.h"
-#include "lights/PointLight.h"
-#include "lights/includes/Lights.h"
-#include "meshes/MeshAssImp.h"
-#include "models/Model.h"
-#include "shaders/loaders/FileShaderLoader.h"
-#include "shaders/programs/ShaderProgram.h"
-#include "shaders/programs/includes/MVPN.h"
+#include "factories/CameraFactory.h"
+#include "factories/LightFactory.h"
+#include "factories/ModelFactory.h"
+#include "gui/HUDImGui.h"
+#include "scenes/loaders/JsonSceneLoader.h"
+#include "scenes/managers/SceneManager.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image/stb_image.h"
+#include "textures/FileTexture.h"
+
+using namespace std;
 
 // Project macros
 
-#define SCENE "content/dev.scene"
+// ...
 
 // Function prototypes
 void KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mode);
 
 void ToggleModelRotation();
 
+// Scene JSON file
+string sceneFile = "content/lambertian.scene";
+
 // Window dimensions
 const GLuint WIDTH = 800, HEIGHT = 600;
 
-bool ModelRotation = true;
+// Shadow Map dimensions
+const GLuint SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
-using namespace std;
+// Render passes
+//enum RenderPasses { SHADOWMAP, };
+
+bool ModelRotation = true;
 
 // The MAIN function, from here we start the application and run the game loop
 int main()
@@ -115,108 +122,38 @@ int main()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
-    string meshPath = "";
-    string vertPath = "";
-    string fragPath = "";
-
-    ifstream fileStream(SCENE, ios::in);
-
-    if (fileStream.is_open())
-    {
-        string line;
-
-        while (getline(fileStream, line))
-        {
-            regex reg("\\s+");
-
-            sregex_token_iterator it(line.begin(), line.end(), reg, -1);
-            sregex_token_iterator end;
-
-            vector<string> tokens(it, end);
-
-            if (tokens.size() == 2)
-            {
-                if (!_stricmp(tokens[0].c_str(), "meshPath"))
-                {
-                    meshPath = tokens[1];
-                }
-                else if (!_stricmp(tokens[0].c_str(), "vertShaderPath"))
-                {
-                    vertPath = tokens[1];
-                }
-                else if (!_stricmp(tokens[0].c_str(), "fragShaderPath"))
-                {
-                    fragPath = tokens[1];
-                }
-            }
-            else
-            {
-                cout << "Scene: incorrect syntax at line \"" << line << "\"."
-                    << endl;
-            }
-        }
-
-        fileStream.close();
-    }
-
     // Main scope
     {
-        // MVPN matrices data structure
-        MVPN mvpn;
+        // Create the factories
+        shared_ptr<ICameraFactory> cameraFactory = make_shared<CameraFactory>();
+        shared_ptr<ILightFactory> lightFactory = make_shared<LightFactory>();
+        shared_ptr<IModelFactory> modelFactory = make_shared<ModelFactory>();
 
-        // Lights data structure
-        Lights lights;
+        // Create the scene loader
+        shared_ptr<ISceneLoader> sceneLoader = make_shared<JsonSceneLoader>(
+                                                sceneFile,
+                                                cameraFactory,
+                                                lightFactory,
+                                                modelFactory);
 
-        // View vector
-        glm::vec3 view;
+        // Create the scene manager
+        SceneManager sceneManager(sceneLoader, (float) WIDTH, (float) HEIGHT);
 
-        // Scene camera
-        CameraPerspective camera(glm::vec3(0.0f, 1.0f, 3.0f),
-                                 glm::vec3(0.0f, 0.0f, 0.0f),
-                                 90.0f,
-                                 (float) WIDTH / (float) HEIGHT,
-                                 0.1f,
-                                 10.0f);
+        // Create the HUD
+        HUDImGui hud(window, sceneManager.lambertian);
 
-        // Scene lights
-        vector<PointLight> pointLights;
-        pointLights.emplace_back(glm::vec3(-3.0f, 2.0f, 0.0f),
-                                 glm::vec3(0.0f, 0.5f, 0.5f),
-                                 5.0f); // Left, Teal
+        std::cout << "Loading scene..." << std::endl;
 
-        pointLights.emplace_back(glm::vec3(3.0f, 2.0f, 0.0f),
-                                 glm::vec3(1.0f, 0.5f, 0.0f),
-                                 5.0f); // Right, Orange
-
-        pointLights.emplace_back(glm::vec3(0.0f, 1.0f, 3.0f),
-                                 glm::vec3(1.0f, 1.0f, 1.0f),
-                                 2.0f); // Front, White
-
-        // Add the scene lights to the lights data structure
-        for (int i = 0; i< pointLights.size(); i++)
-        {
-            PointLight & pointLight = pointLights.at(i);
-            lights.Positions[i] = glm::vec4(pointLight.getPosition(), 1.0);
-            lights.Colors[i] = glm::vec4(pointLight.getColor(), pointLight.getIntensity());
-        }
-
-        // Scene models
-        Model model(make_unique<MeshAssImp>(meshPath),
-                    make_shared<ShaderProgram>(make_shared<FileShaderLoader>(vertPath),
-                                               make_shared<FileShaderLoader>(fragPath),
-                                               mvpn,
-                                               lights),
-                    glm::vec3(0.0f, 0.0f, 0.0f),
-                    glm::vec3(0.0f, 0.0f, 0.0f),
-                    glm::vec3(0.33f, 0.33f, 0.33f));
-
-        // Point the camera at the target
-        camera.lookAt(model.getPosition(), glm::vec3(0.0f, 1.0f, 0.0f));
+        sceneManager.load();
 
         // Uncommenting this call will result in wireframe polygons.
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        glm::vec3 modelRotation = glm::vec3(0.0f);
+        std::cout << "Scene loaded." << std::endl;
+
+        double time = glfwGetTime();
+
+        std::cout << "Starting render loop." << std::endl;
 
         // Render loop
         while (!glfwWindowShouldClose(window))
@@ -226,44 +163,32 @@ int main()
 
             // Clear both the color and the depth buffer
             glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            if (ModelRotation)
-            {
-                // Make the model spin
-                modelRotation = model.getRotation();
-                modelRotation.y = (modelRotation.y + 1.0f) - (int)modelRotation.y / 360 * 360.0f;
-                model.setRotation(modelRotation);
-            }
+            // Update the time passed since the last frame
+            double deltaSeconds = time;
+            time = glfwGetTime();
+            deltaSeconds = max(time - deltaSeconds, 0.0);
 
-            // Update the MVPN matrices
-            mvpn.model = model.getModelMatrix();
-            mvpn.view = camera.getViewMatrix();
-            mvpn.projection = camera.getProjectionMatrix();
-            mvpn.normal = transpose(inverse(mvpn.model));
+            // Update the HUD
+            hud.update(deltaSeconds);
 
-            // Update the view vector
-            view = camera.getViewVector();
+            // Update the scene
+            sceneManager.update(deltaSeconds);
 
-            // Get the shader program of the current model
-            shared_ptr<IShaderProgram> modelProgram = model.getProgram();
+            // Render the scene
+            sceneManager.render();
 
-            // This should always be valid, but just in case
-            if (modelProgram.get())
-            {
-                // Update the scene uniforms
-                modelProgram->setViewVector(glm::value_ptr(view));
-            }
-
-            // Render the model
-            model.render();
+            // Draw the HUD
+            hud.draw();
 
             // Swap the screen buffers
             glfwSwapBuffers(window);
         }
 
         // Main scope ends here and resources are released
+
+        std::cout << "Shutting down." << std::endl;
     }
 
     // Terminate GLFW, clearing any resources allocated by GLFW.

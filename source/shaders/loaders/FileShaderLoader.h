@@ -16,11 +16,11 @@ class FileShaderLoader : public IShaderLoader
 		~FileShaderLoader() noexcept;
 
 	private:
-		// The  shader file path
-		std::string path;
+		// The shader file path
+		std::string path = "";
 
 		// The vertex shader source
-		std::string source;
+		std::string source = "";
 
 		// Create a default shader source as fallback
 		void createDefault();

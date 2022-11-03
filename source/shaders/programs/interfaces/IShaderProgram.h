@@ -5,8 +5,13 @@
 #include <memory>
 #include <string>
 #include "lights/includes/Lights.h"
-#include "shaders/loaders/interfaces/IShaderLoader.h"
 #include "shaders/programs/includes/MVPN.h"
+#include "shaders/programs/includes/Lambertian.h"
+
+// Forward declarations
+
+class IShaderLoader;
+class ITexture;
 
 // The interface that Shader Program classes must implement
 
@@ -27,8 +32,12 @@ class IShaderProgram
 
 		IShaderProgram(std::shared_ptr<IShaderLoader> newVertexShaderLoader,
 					   std::shared_ptr<IShaderLoader> newFragmentShaderLoader,
+					   std::shared_ptr<ITexture> newAlbedoMap,
+					   std::shared_ptr<ITexture> newNormalsMap,
+					   std::shared_ptr<ITexture> newRoughnessMap,
 					   const MVPN & newMvpn,
-					   const Lights & newLights)
+					   const Lights & newLights,
+					   const Lambertian & newLambertian)
 					   noexcept {};
 
 		// Disallowed - no need for 2 instances of the same shader program

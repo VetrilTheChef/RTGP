@@ -2,6 +2,7 @@
 #include <iostream>
 #include "shaders/buffers/UniformBufferObject.h"
 #include "shaders/loaders/interfaces/IShaderLoader.h"
+#include "textures/interfaces/ITexture.h"
 
 using namespace std;
 using namespace glm;
@@ -12,19 +13,32 @@ using namespace glm;
 
 ShaderProgram::ShaderProgram(shared_ptr<IShaderLoader> newVertexShaderLoader,
 							 shared_ptr<IShaderLoader> newFragmentShaderLoader,
+							 std::shared_ptr<ITexture> newAlbedoMap,
+							 std::shared_ptr<ITexture> newNormalsMap,
+							 std::shared_ptr<ITexture> newRoughnessMap,
 							 const MVPN & newMvpn,
-							 const Lights & newLights)
+							 const Lights & newLights,
+							 const Lambertian & newLambertian)
 	noexcept :
 	IShaderProgram(newVertexShaderLoader,
 				   newFragmentShaderLoader,
+				   newAlbedoMap,
+				   newNormalsMap,
+				   newRoughnessMap,
 				   newMvpn,
-				   newLights)
+				   newLights,
+				   newLambertian)
 {
 	vertexShaderLoader = newVertexShaderLoader;
 	fragmentShaderLoader = newFragmentShaderLoader;
 
+	albedoMap = newAlbedoMap;
+	normalsMap = newNormalsMap;
+	roughnessMap = newRoughnessMap;
+
 	mvpn = & newMvpn;
 	lights = & newLights;
+	lambertian = & newLambertian;
 
 	GLint vertexShaderId = 0;
 	GLint fragmentShaderId = 0;
@@ -34,6 +48,7 @@ ShaderProgram::ShaderProgram(shared_ptr<IShaderLoader> newVertexShaderLoader,
 		if (createProgram(vertexShaderId, fragmentShaderId))
 		{
 			createUBOs();
+			createTextures();
 		}
 	}
 
@@ -45,23 +60,63 @@ ShaderProgram::~ShaderProgram() noexcept
 	vertexShaderLoader.reset();
 	fragmentShaderLoader.reset();
 
+	deleteTextures();
 	deleteUBOs();
 	deleteProgram();
 }
 
 void ShaderProgram::activate() noexcept
 {
+	// Set the active shader program
 	glUseProgram(id);
 
-	if (mvpnUBO.get() && lightsUBO.get())
+	// Activate the textures
+	if (albedoMap.get())
 	{
-		mvpnUBO->update(mvpn);
-		lightsUBO->update(lights);
+		glActiveTexture(GL_TEXTURE0 + ALBEDO_TEXTURE_INDEX);
+		albedoMap->activate();
 	}
+
+	if (normalsMap.get())
+	{
+		glActiveTexture(GL_TEXTURE0 + NORMALS_TEXTURE_INDEX);
+		normalsMap->activate();
+	}
+
+	if (roughnessMap.get())
+	{
+		glActiveTexture(GL_TEXTURE0 + ROUGHNESS_TEXTURE_INDEX);
+		roughnessMap->activate();
+	}
+
+	// Update the UBOs
+	if (mvpnUBO.get()) { mvpnUBO->update(mvpn); }
+	if (lightsUBO.get()) { lightsUBO->update(lights); }
+	if (lambertianUBO.get()) { lambertianUBO->update(lambertian); }
 }
 
 void ShaderProgram::deactivate() const noexcept
 {
+	// Deactivate the textures
+	if (roughnessMap.get())
+	{
+		glActiveTexture(GL_TEXTURE0 + ROUGHNESS_TEXTURE_INDEX);
+		roughnessMap->deactivate();
+	}
+
+	if (normalsMap.get())
+	{
+		glActiveTexture(GL_TEXTURE0 + NORMALS_TEXTURE_INDEX);
+		normalsMap->deactivate();
+	}
+
+	if (albedoMap.get())
+	{
+		glActiveTexture(GL_TEXTURE0 + ALBEDO_TEXTURE_INDEX);
+		albedoMap->deactivate();
+	}
+
+	// Unset the active shader program
 	glUseProgram(0);
 }
 
@@ -277,22 +332,69 @@ void ShaderProgram::createUBOs() noexcept
 	lightsUBO = make_unique<UniformBufferObject>();
 	lightsUBO->create(sizeof(Lights));
 	lightsUBO->bind(id, Lights::getBlockName(), Lights::getBindingIndex());
+
+	// Lambertian UBO
+	lambertianUBO = make_unique<UniformBufferObject>();
+	lambertianUBO->create(sizeof(Lambertian));
+	lambertianUBO->bind(id, Lambertian::getBlockName(), Lambertian::getBindingIndex());
 }
 
 void ShaderProgram::deleteUBOs() noexcept
 {
 	// Destroy the UBOs
-	if (mvpnUBO.get())
-	{
-		mvpnUBO->destroy();
-	}
-
-	if (lightsUBO.get())
-	{
-		lightsUBO->destroy();
-	}
+	if (mvpnUBO.get()) { mvpnUBO->destroy(); }
+	if (lightsUBO.get()) { lightsUBO->destroy(); }
+	if (lambertianUBO.get()) { lambertianUBO->destroy(); }
 
 	// Release the smart pointers
 	mvpnUBO.release();
 	lightsUBO.release();
+	lambertianUBO.release();
+}
+
+void ShaderProgram::createTextures() noexcept
+{
+	// Load the textures and bind them
+	if (albedoMap.get())
+	{
+		glActiveTexture(GL_TEXTURE0 + ALBEDO_TEXTURE_INDEX);
+		albedoMap->create();
+	}
+
+	if (normalsMap.get())
+	{
+		glActiveTexture(GL_TEXTURE0 + NORMALS_TEXTURE_INDEX);
+		normalsMap->create();
+	}
+
+	if (roughnessMap.get())
+	{
+		glActiveTexture(GL_TEXTURE0 + ROUGHNESS_TEXTURE_INDEX);
+		roughnessMap->create();
+	}
+
+}
+
+void ShaderProgram::deleteTextures() noexcept
+{
+	// Destroy the textures
+	if (albedoMap.get())
+	{
+		albedoMap->destroy();
+	}
+
+	if (normalsMap.get())
+	{
+		normalsMap->destroy();
+	}
+
+	if (roughnessMap.get())
+	{
+		roughnessMap->destroy();
+	}
+
+	// Release the smart pointers
+	albedoMap.reset();
+	normalsMap.reset();
+	roughnessMap.reset();
 }

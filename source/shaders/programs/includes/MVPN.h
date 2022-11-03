@@ -8,7 +8,8 @@
 
 // MVPN matrices data structure
 
-struct MVPN {
+struct MVPN
+{
 	// Model matrix
 	glm::mat4 model{};
 

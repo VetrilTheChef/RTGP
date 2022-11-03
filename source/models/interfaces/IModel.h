@@ -18,22 +18,34 @@ class IModel
 		// The model's shader program
 		std::shared_ptr<IShaderProgram> program;
 
+		// Get the model position
 		virtual glm::vec3 getPosition() const noexcept = 0;
 
+		// Set the model position
 		virtual void setPosition(const glm::vec3 newPosition) noexcept = 0;
 
+		// Get the model rotation
 		virtual glm::vec3 getRotation() const noexcept = 0;
 
+		// Set the model rotation
 		virtual void setRotation(const glm::vec3 newRotation) noexcept = 0;
 
+		// Get the model scale
 		virtual glm::vec3 getScale() const noexcept = 0;
 
+		// Set the model scale
 		virtual void setScale(const glm::vec3 newScale) noexcept = 0;
 
+		// Get the model matrix
 		virtual glm::mat4 getModelMatrix() const noexcept = 0;
 
+		// Get the model shader program
 		virtual std::shared_ptr<IShaderProgram> getProgram() const noexcept = 0;
 
+		// Update the model
+		virtual void update(double deltaSeconds) noexcept = 0;
+
+		// Render the model
 		virtual void render() const noexcept = 0;
 
 	protected:

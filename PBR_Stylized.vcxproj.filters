@@ -67,6 +67,42 @@
     <Filter Include="Source Files\shaders\programs\includes">
       <UniqueIdentifier>{e08bce38-bfff-423a-8b3c-8650cfc774b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\textures">
+      <UniqueIdentifier>{14c62ccb-3517-47fd-87c1-4ad53f491247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\interfaces">
+      <UniqueIdentifier>{f58c5741-9a3d-430f-b3ce-7ac0145afa3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes">
+      <UniqueIdentifier>{8a5ff037-462b-4850-b518-6ca476858635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes\loaders">
+      <UniqueIdentifier>{26776238-1354-4b50-a530-452b263c42e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes\loaders\interfaces">
+      <UniqueIdentifier>{68646574-4c8f-4365-9e0a-2b57b42d7d88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes\managers">
+      <UniqueIdentifier>{177f7ec7-2bef-4fa9-9649-15a22bd8a038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes\managers\interfaces">
+      <UniqueIdentifier>{91d9d22f-71cc-405f-b658-a137db82371b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\factories">
+      <UniqueIdentifier>{0b60834d-9e2a-4552-949a-c50c955467e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\factories\interfaces">
+      <UniqueIdentifier>{e99b864a-577f-47c6-afbf-62d3f6fc9358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui">
+      <UniqueIdentifier>{708258b3-b2ab-441a-bd8c-06d0a88f3b03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\interfaces">
+      <UniqueIdentifier>{6df51c6e-c108-4d7b-8d11-ac2630226779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\includes">
+      <UniqueIdentifier>{c9190523-33fc-44ef-bd13-f0b14c85fb25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pbr_stylized.cpp">
@@ -95,6 +131,45 @@
     </ClCompile>
     <ClCompile Include="source\shaders\buffers\UniformBufferObject.cpp">
       <Filter>Source Files\shaders\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\textures\FileTexture.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="source\scenes\loaders\JsonSceneLoader.cpp">
+      <Filter>Source Files\scenes\loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="source\scenes\managers\SceneManager.cpp">
+      <Filter>Source Files\scenes\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\factories\LightFactory.cpp">
+      <Filter>Source Files\factories</Filter>
+    </ClCompile>
+    <ClCompile Include="source\factories\ModelFactory.cpp">
+      <Filter>Source Files\factories</Filter>
+    </ClCompile>
+    <ClCompile Include="source\factories\CameraFactory.cpp">
+      <Filter>Source Files\factories</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui\HUDImGui.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui\includes\imgui.cpp">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui\includes\imgui_draw.cpp">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui\includes\imgui_impl_glfw.cpp">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui\includes\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui\includes\imgui_tables.cpp">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui\includes\imgui_widgets.cpp">
+      <Filter>Source Files\gui\includes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +225,78 @@
       <Filter>Source Files\shaders\buffers\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="source\shaders\programs\includes\MVPN.h">
+      <Filter>Source Files\shaders\programs\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\textures\interfaces\ITexture.h">
+      <Filter>Source Files\textures\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\textures\FileTexture.h">
+      <Filter>Source Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scenes\loaders\interfaces\ISceneLoader.h">
+      <Filter>Source Files\scenes\loaders\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scenes\loaders\JsonSceneLoader.h">
+      <Filter>Source Files\scenes\loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scenes\managers\interfaces\ISceneManager.h">
+      <Filter>Source Files\scenes\managers\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scenes\managers\SceneManager.h">
+      <Filter>Source Files\scenes\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\factories\LightFactory.h">
+      <Filter>Source Files\factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\factories\interfaces\ILightFactory.h">
+      <Filter>Source Files\factories\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\factories\ModelFactory.h">
+      <Filter>Source Files\factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\factories\interfaces\IModelFactory.h">
+      <Filter>Source Files\factories\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\factories\CameraFactory.h">
+      <Filter>Source Files\factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\factories\interfaces\ICameraFactory.h">
+      <Filter>Source Files\factories\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\interfaces\IHUD.h">
+      <Filter>Source Files\gui\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\HUDImGui.h">
+      <Filter>Source Files\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imconfig.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imgui.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imgui_impl_glfw.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imgui_impl_opengl3.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imgui_impl_opengl3_loader.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imgui_internal.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imstb_rectpack.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imstb_textedit.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\includes\imstb_truetype.h">
+      <Filter>Source Files\gui\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shaders\programs\includes\Lambertian.h">
       <Filter>Source Files\shaders\programs\includes</Filter>
     </ClInclude>
   </ItemGroup>

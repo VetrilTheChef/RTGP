@@ -1,3 +1,48 @@
-meshPath content/models/bunny.obj
-vertShaderPath content/shaders/vertex/dev.vert
-fragShaderPath content/shaders/fragment/dev.frag
+{
+	"camera": 
+	{
+		"type": "perspective",
+		"position": [ 0.0, 1.0, 3.0 ],
+		"rotation": [ 18.5, 0.0, 0.0 ],
+		"fovY": 90.0,
+		"nearPlane": 0.1,
+		"farPlane": 10.0
+	},
+	"lights":
+	[
+		{
+			"type": "point",
+			"position": [-3.0, 2.0, 0.0],
+			"color": [0.0, 0.5, 0.5],
+			"intensity": 5.0
+		},
+		{
+			"type": "point",
+			"position": [3.0, 2.0, 0.0],
+			"color": [1.0, 0.5, 0.0],
+			"intensity": 5.0
+		},
+		{
+			"type": "point",
+			"position": [0.0, 1.0, 3.0],
+			"color": [1.0, 1.0, 1.0],
+			"intensity": 2.0
+		}
+	],
+	"models": [
+		{
+			"type": "static",
+			"mesh": "content/models/teapot.obj",
+			"vertexShader": "content/shaders/vertex/dev.vert",
+			"fragmentShader": "content/shaders/fragment/dev.frag",
+			"textures": {
+				"albedo": "content/textures/flat_a.jpg",
+				"normals": "content/textures/dev_n.png",
+				"roughness": "content/textures/dev_r.png"
+			},
+			"position": [ 0.0, -0.25, 0.0 ],
+			"rotation": [ 0.0, 0.0, 0.0 ],
+			"scale": [ 3.0, 3.0, 3.0 ]
+		}
+	]
+}

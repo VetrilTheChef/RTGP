@@ -5,6 +5,7 @@
 #include <assimp/PostProcess.h>
 
 using namespace std;
+using namespace glm;
 
 ///////////////////////////////////////////////////////////////////////////////
 // PUBLIC
@@ -248,14 +249,14 @@ bool MeshAssImp::loadMesh(aiMesh & mesh)
 		Vertex vertex;
 
 		// Store the position
-		vertex.Position = glm::vec3(mesh.mVertices[nVertex].x,
-			mesh.mVertices[nVertex].y,
-			mesh.mVertices[nVertex].z);
+		vertex.Position = vec3(mesh.mVertices[nVertex].x,
+									mesh.mVertices[nVertex].y,
+									mesh.mVertices[nVertex].z);
 
 		// Iterate over the UV channels
 		for (int uvChannel = 0; uvChannel < numUVChannels; uvChannel++)
 		{
-			glm::vec2 UV;
+			vec2 UV;
 
 			// If the mesh has UVs for that channel, copy the values
 			if (mesh.HasTextureCoords(uvChannel))
@@ -265,27 +266,27 @@ bool MeshAssImp::loadMesh(aiMesh & mesh)
 			}
 
 			// Store the UVs
-			vertex.TexCoords.emplace_back(UV);
+			vertex.TexCoords = UV;
 		}
 
 		// Sanity check: vertex's TexCoords vector length must be
 		// equal to the declared number of UV channels
-		if (vertex.TexCoords.size() != numUVChannels)
-		{
+		//if (vertex.TexCoords.size() != numUVChannels)
+		//{
 			// The mesh should have UVs,
 			// log and report the problem
-			cout << "Mesh: mesh" << mesh.mName.C_Str() << " has "
-				<< numUVChannels << ", but only " << vertex.TexCoords.size()
-				<< " channels were found." << endl;
+			//cout << "Mesh: mesh" << mesh.mName.C_Str() << " has "
+			//	<< numUVChannels << ", but only " << vertex.TexCoords.size()
+			//	<< " channels were found." << endl;
 
-			loadResult = false;
-		}
+			//loadResult = false;
+		//}
 
 		// If the mesh has normals, copy the values
 		if (mesh.HasNormals())
 		{
 			// Store the normal
-			vertex.Normal = glm::vec3(mesh.mNormals[nVertex].x,
+			vertex.Normal = vec3(mesh.mNormals[nVertex].x,
 				mesh.mNormals[nVertex].y,
 				mesh.mNormals[nVertex].z);
 		}
@@ -303,12 +304,12 @@ bool MeshAssImp::loadMesh(aiMesh & mesh)
 		if (mesh.HasTangentsAndBitangents())
 		{
 			// Store the tanget
-			vertex.Tangent = glm::vec3(mesh.mTangents[nVertex].x,
+			vertex.Tangent = vec3(mesh.mTangents[nVertex].x,
 				mesh.mTangents[nVertex].y,
 				mesh.mTangents[nVertex].z);
 
 			// Store the bitanget
-			vertex.Bitangent = glm::vec3(mesh.mBitangents[nVertex].x,
+			vertex.Bitangent = vec3(mesh.mBitangents[nVertex].x,
 				mesh.mBitangents[nVertex].y,
 				mesh.mBitangents[nVertex].z);
 		}
@@ -381,160 +382,160 @@ void MeshAssImp::createDefault()
 	fill(vertices.begin(), vertices.end(), Vertex());
 	
 	// Face 0
-	vertices[0].Position = glm::vec3(-1.0f, -1.0f,  1.0f);
-	vertices[1].Position = glm::vec3(-1.0f,  1.0f,  1.0f);
-	vertices[2].Position = glm::vec3( 1.0f,  1.0f,  1.0f);
-	vertices[3].Position = glm::vec3( 1.0f, -1.0f,  1.0f);
+	vertices[0].Position = vec3(-1.0f, -1.0f,  1.0f);
+	vertices[1].Position = vec3(-1.0f,  1.0f,  1.0f);
+	vertices[2].Position = vec3( 1.0f,  1.0f,  1.0f);
+	vertices[3].Position = vec3( 1.0f, -1.0f,  1.0f);
 
-	vertices[0].Normal = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[1].Normal = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[2].Normal = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[3].Normal = glm::vec3(0.0f, 0.0f, 1.0f);
+	vertices[0].Normal = vec3(0.0f, 0.0f, 1.0f);
+	vertices[1].Normal = vec3(0.0f, 0.0f, 1.0f);
+	vertices[2].Normal = vec3(0.0f, 0.0f, 1.0f);
+	vertices[3].Normal = vec3(0.0f, 0.0f, 1.0f);
 
-	vertices[0].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[1].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[2].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[3].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
+	vertices[0].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[1].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[2].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[3].Tangent = vec3(1.0f, 0.0f, 0.0f);
 
-	vertices[0].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[1].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[2].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[3].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
+	vertices[0].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[1].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[2].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[3].Bitangent = vec3(0.0f, 1.0f, 0.0f);
 
-	vertices[0].TexCoords.emplace_back(glm::vec2(0.0f, 0.0f));
-	vertices[1].TexCoords.emplace_back(glm::vec2(0.0f, 1.0f));
-	vertices[2].TexCoords.emplace_back(glm::vec2(1.0f, 1.0f));
-	vertices[3].TexCoords.emplace_back(glm::vec2(1.0f, 0.0f));
+	vertices[0].TexCoords = vec2(0.0f, 0.0f);
+	vertices[1].TexCoords = vec2(0.0f, 1.0f);
+	vertices[2].TexCoords = vec2(1.0f, 1.0f);
+	vertices[3].TexCoords = vec2(1.0f, 0.0f);
 
 	// Face 1
-	vertices[4].Position = glm::vec3(-1.0f, -1.0f, -1.0f);
-	vertices[5].Position = glm::vec3(-1.0f,  1.0f, -1.0f);
-	vertices[6].Position = glm::vec3(-1.0f,  1.0f,  1.0f);
-	vertices[7].Position = glm::vec3(-1.0f, -1.0f,  1.0f);
+	vertices[4].Position = vec3(-1.0f, -1.0f, -1.0f);
+	vertices[5].Position = vec3(-1.0f,  1.0f, -1.0f);
+	vertices[6].Position = vec3(-1.0f,  1.0f,  1.0f);
+	vertices[7].Position = vec3(-1.0f, -1.0f,  1.0f);
 
-	vertices[4].Normal = glm::vec3(-1.0f, 0.0f, 0.0f);
-	vertices[5].Normal = glm::vec3(-1.0f, 0.0f, 0.0f);
-	vertices[6].Normal = glm::vec3(-1.0f, 0.0f, 0.0f);
-	vertices[7].Normal = glm::vec3(-1.0f, 0.0f, 0.0f);
+	vertices[4].Normal = vec3(-1.0f, 0.0f, 0.0f);
+	vertices[5].Normal = vec3(-1.0f, 0.0f, 0.0f);
+	vertices[6].Normal = vec3(-1.0f, 0.0f, 0.0f);
+	vertices[7].Normal = vec3(-1.0f, 0.0f, 0.0f);
 
-	vertices[4].Tangent = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[5].Tangent = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[6].Tangent = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[7].Tangent = glm::vec3(0.0f, 0.0f, 1.0f);
+	vertices[4].Tangent = vec3(0.0f, 0.0f, 1.0f);
+	vertices[5].Tangent = vec3(0.0f, 0.0f, 1.0f);
+	vertices[6].Tangent = vec3(0.0f, 0.0f, 1.0f);
+	vertices[7].Tangent = vec3(0.0f, 0.0f, 1.0f);
 
-	vertices[4].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[5].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[6].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[7].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
+	vertices[4].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[5].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[6].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[7].Bitangent = vec3(0.0f, 1.0f, 0.0f);
 
-	vertices[4].TexCoords.emplace_back(glm::vec2(0.0f, 0.0f));
-	vertices[5].TexCoords.emplace_back(glm::vec2(0.0f, 1.0f));
-	vertices[6].TexCoords.emplace_back(glm::vec2(1.0f, 1.0f));
-	vertices[7].TexCoords.emplace_back(glm::vec2(1.0f, 0.0f));
+	vertices[4].TexCoords = vec2(0.0f, 0.0f);
+	vertices[5].TexCoords = vec2(0.0f, 1.0f);
+	vertices[6].TexCoords = vec2(1.0f, 1.0f);
+	vertices[7].TexCoords = vec2(1.0f, 0.0f);
 
 	// Face 2
-	vertices[8].Position  = glm::vec3( 1.0f, -1.0f, -1.0f);
-	vertices[9].Position  = glm::vec3( 1.0f,  1.0f, -1.0f);
-	vertices[10].Position = glm::vec3(-1.0f,  1.0f, -1.0f);
-	vertices[11].Position = glm::vec3(-1.0f, -1.0f, -1.0f);
+	vertices[8].Position  = vec3( 1.0f, -1.0f, -1.0f);
+	vertices[9].Position  = vec3( 1.0f,  1.0f, -1.0f);
+	vertices[10].Position = vec3(-1.0f,  1.0f, -1.0f);
+	vertices[11].Position = vec3(-1.0f, -1.0f, -1.0f);
 
-	vertices[8].Normal  = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[9].Normal  = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[10].Normal = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[11].Normal = glm::vec3(0.0f, 0.0f, -1.0f);
+	vertices[8].Normal  = vec3(0.0f, 0.0f, -1.0f);
+	vertices[9].Normal  = vec3(0.0f, 0.0f, -1.0f);
+	vertices[10].Normal = vec3(0.0f, 0.0f, -1.0f);
+	vertices[11].Normal = vec3(0.0f, 0.0f, -1.0f);
 
-	vertices[8].Tangent  = glm::vec3(-1.0f, 0.0f, 0.0f);
-	vertices[9].Tangent  = glm::vec3(-1.0f, 0.0f, 0.0f);
-	vertices[10].Tangent = glm::vec3(-1.0f, 0.0f, 0.0f);
-	vertices[11].Tangent = glm::vec3(-1.0f, 0.0f, 0.0f);
+	vertices[8].Tangent  = vec3(-1.0f, 0.0f, 0.0f);
+	vertices[9].Tangent  = vec3(-1.0f, 0.0f, 0.0f);
+	vertices[10].Tangent = vec3(-1.0f, 0.0f, 0.0f);
+	vertices[11].Tangent = vec3(-1.0f, 0.0f, 0.0f);
 
-	vertices[8].Bitangent  = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[9].Bitangent  = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[10].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[11].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
+	vertices[8].Bitangent  = vec3(0.0f, 1.0f, 0.0f);
+	vertices[9].Bitangent  = vec3(0.0f, 1.0f, 0.0f);
+	vertices[10].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[11].Bitangent = vec3(0.0f, 1.0f, 0.0f);
 
-	vertices[8].TexCoords.emplace_back(glm::vec2(0.0f, 0.0f));
-	vertices[9].TexCoords.emplace_back(glm::vec2(0.0f, 1.0f));
-	vertices[10].TexCoords.emplace_back(glm::vec2(1.0f, 1.0f));
-	vertices[11].TexCoords.emplace_back(glm::vec2(1.0f, 0.0f));
+	vertices[8].TexCoords = vec2(0.0f, 0.0f);
+	vertices[9].TexCoords = vec2(0.0f, 1.0f);
+	vertices[10].TexCoords = vec2(1.0f, 1.0f);
+	vertices[11].TexCoords = vec2(1.0f, 0.0f);
 
 	// Face 3
-	vertices[12].Position = glm::vec3( 1.0f, -1.0f,  1.0f);
-	vertices[13].Position = glm::vec3( 1.0f,  1.0f,  1.0f);
-	vertices[14].Position = glm::vec3( 1.0f,  1.0f, -1.0f);
-	vertices[15].Position = glm::vec3( 1.0f, -1.0f, -1.0f);
+	vertices[12].Position = vec3( 1.0f, -1.0f,  1.0f);
+	vertices[13].Position = vec3( 1.0f,  1.0f,  1.0f);
+	vertices[14].Position = vec3( 1.0f,  1.0f, -1.0f);
+	vertices[15].Position = vec3( 1.0f, -1.0f, -1.0f);
 
-	vertices[12].Normal = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[13].Normal = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[14].Normal = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[15].Normal = glm::vec3(1.0f, 0.0f, 0.0f);
+	vertices[12].Normal = vec3(1.0f, 0.0f, 0.0f);
+	vertices[13].Normal = vec3(1.0f, 0.0f, 0.0f);
+	vertices[14].Normal = vec3(1.0f, 0.0f, 0.0f);
+	vertices[15].Normal = vec3(1.0f, 0.0f, 0.0f);
 
-	vertices[12].Tangent = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[13].Tangent = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[14].Tangent = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[15].Tangent = glm::vec3(0.0f, 0.0f, -1.0f);
+	vertices[12].Tangent = vec3(0.0f, 0.0f, -1.0f);
+	vertices[13].Tangent = vec3(0.0f, 0.0f, -1.0f);
+	vertices[14].Tangent = vec3(0.0f, 0.0f, -1.0f);
+	vertices[15].Tangent = vec3(0.0f, 0.0f, -1.0f);
 
-	vertices[12].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[13].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[14].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[15].Bitangent = glm::vec3(0.0f, 1.0f, 0.0f);
+	vertices[12].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[13].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[14].Bitangent = vec3(0.0f, 1.0f, 0.0f);
+	vertices[15].Bitangent = vec3(0.0f, 1.0f, 0.0f);
 
-	vertices[12].TexCoords.emplace_back(glm::vec2(0.0f, 0.0f));
-	vertices[13].TexCoords.emplace_back(glm::vec2(0.0f, 1.0f));
-	vertices[14].TexCoords.emplace_back(glm::vec2(1.0f, 1.0f));
-	vertices[15].TexCoords.emplace_back(glm::vec2(1.0f, 0.0f));
+	vertices[12].TexCoords = vec2(0.0f, 0.0f);
+	vertices[13].TexCoords = vec2(0.0f, 1.0f);
+	vertices[14].TexCoords = vec2(1.0f, 1.0f);
+	vertices[15].TexCoords = vec2(1.0f, 0.0f);
 
 	// Face 4
-	vertices[16].Position = glm::vec3(-1.0f,  1.0f,  1.0f);
-	vertices[17].Position = glm::vec3(-1.0f,  1.0f, -1.0f);
-	vertices[18].Position = glm::vec3( 1.0f,  1.0f, -1.0f);
-	vertices[19].Position = glm::vec3( 1.0f,  1.0f,  1.0f);
+	vertices[16].Position = vec3(-1.0f,  1.0f,  1.0f);
+	vertices[17].Position = vec3(-1.0f,  1.0f, -1.0f);
+	vertices[18].Position = vec3( 1.0f,  1.0f, -1.0f);
+	vertices[19].Position = vec3( 1.0f,  1.0f,  1.0f);
 
-	vertices[16].Normal = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[17].Normal = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[18].Normal = glm::vec3(0.0f, 1.0f, 0.0f);
-	vertices[19].Normal = glm::vec3(0.0f, 1.0f, 0.0f);
+	vertices[16].Normal = vec3(0.0f, 1.0f, 0.0f);
+	vertices[17].Normal = vec3(0.0f, 1.0f, 0.0f);
+	vertices[18].Normal = vec3(0.0f, 1.0f, 0.0f);
+	vertices[19].Normal = vec3(0.0f, 1.0f, 0.0f);
 
-	vertices[16].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[17].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[18].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[19].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
+	vertices[16].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[17].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[18].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[19].Tangent = vec3(1.0f, 0.0f, 0.0f);
 
-	vertices[16].Bitangent = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[17].Bitangent = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[18].Bitangent = glm::vec3(0.0f, 0.0f, -1.0f);
-	vertices[19].Bitangent = glm::vec3(0.0f, 0.0f, -1.0f);
+	vertices[16].Bitangent = vec3(0.0f, 0.0f, -1.0f);
+	vertices[17].Bitangent = vec3(0.0f, 0.0f, -1.0f);
+	vertices[18].Bitangent = vec3(0.0f, 0.0f, -1.0f);
+	vertices[19].Bitangent = vec3(0.0f, 0.0f, -1.0f);
 
-	vertices[16].TexCoords.emplace_back(glm::vec2(0.0f, 0.0f));
-	vertices[17].TexCoords.emplace_back(glm::vec2(0.0f, 1.0f));
-	vertices[18].TexCoords.emplace_back(glm::vec2(1.0f, 1.0f));
-	vertices[19].TexCoords.emplace_back(glm::vec2(1.0f, 0.0f));
+	vertices[16].TexCoords = vec2(0.0f, 0.0f);
+	vertices[17].TexCoords = vec2(0.0f, 1.0f);
+	vertices[18].TexCoords = vec2(1.0f, 1.0f);
+	vertices[19].TexCoords = vec2(1.0f, 0.0f);
 
 	// Face 5
-	vertices[20].Position = glm::vec3(-1.0f, -1.0f, -1.0f);
-	vertices[21].Position = glm::vec3(-1.0f, -1.0f,  1.0f);
-	vertices[22].Position = glm::vec3( 1.0f, -1.0f,  1.0f);
-	vertices[23].Position = glm::vec3( 1.0f, -1.0f, -1.0f);
+	vertices[20].Position = vec3(-1.0f, -1.0f, -1.0f);
+	vertices[21].Position = vec3(-1.0f, -1.0f,  1.0f);
+	vertices[22].Position = vec3( 1.0f, -1.0f,  1.0f);
+	vertices[23].Position = vec3( 1.0f, -1.0f, -1.0f);
 
-	vertices[20].Normal = glm::vec3(0.0f, -1.0f, 0.0f);
-	vertices[21].Normal = glm::vec3(0.0f, -1.0f, 0.0f);
-	vertices[22].Normal = glm::vec3(0.0f, -1.0f, 0.0f);
-	vertices[23].Normal = glm::vec3(0.0f, -1.0f, 0.0f);
+	vertices[20].Normal = vec3(0.0f, -1.0f, 0.0f);
+	vertices[21].Normal = vec3(0.0f, -1.0f, 0.0f);
+	vertices[22].Normal = vec3(0.0f, -1.0f, 0.0f);
+	vertices[23].Normal = vec3(0.0f, -1.0f, 0.0f);
 
-	vertices[20].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[21].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[22].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
-	vertices[23].Tangent = glm::vec3(1.0f, 0.0f, 0.0f);
+	vertices[20].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[21].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[22].Tangent = vec3(1.0f, 0.0f, 0.0f);
+	vertices[23].Tangent = vec3(1.0f, 0.0f, 0.0f);
 
-	vertices[20].Bitangent = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[21].Bitangent = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[22].Bitangent = glm::vec3(0.0f, 0.0f, 1.0f);
-	vertices[23].Bitangent = glm::vec3(0.0f, 0.0f, 1.0f);
+	vertices[20].Bitangent = vec3(0.0f, 0.0f, 1.0f);
+	vertices[21].Bitangent = vec3(0.0f, 0.0f, 1.0f);
+	vertices[22].Bitangent = vec3(0.0f, 0.0f, 1.0f);
+	vertices[23].Bitangent = vec3(0.0f, 0.0f, 1.0f);
 
-	vertices[20].TexCoords.emplace_back(glm::vec2(0.0f, 0.0f));
-	vertices[21].TexCoords.emplace_back(glm::vec2(0.0f, 1.0f));
-	vertices[22].TexCoords.emplace_back(glm::vec2(1.0f, 1.0f));
-	vertices[23].TexCoords.emplace_back(glm::vec2(1.0f, 0.0f));
+	vertices[20].TexCoords = vec2(0.0f, 0.0f);
+	vertices[21].TexCoords = vec2(0.0f, 1.0f);
+	vertices[22].TexCoords = vec2(1.0f, 1.0f);
+	vertices[23].TexCoords = vec2(1.0f, 0.0f);
 
 	// Create the indices
 	
@@ -616,7 +617,7 @@ void MeshAssImp::glInitialize()
 	glEnableVertexAttribArray(3);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) offsetof(Vertex, Bitangent));
 	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, TexCoords));
+	glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) offsetof(Vertex, TexCoords));
 
 	glBindVertexArray(0);
 }

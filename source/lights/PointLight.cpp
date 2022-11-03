@@ -103,6 +103,10 @@ void PointLight::setColor(const vec3 newColor) noexcept
 	color.z = newColor.z;
 }
 
+void PointLight::update(double deltaSeconds) noexcept
+{
+}
+
 void PointLight::draw() noexcept
 {
 	// TODO: draw a simple placeholder on screen

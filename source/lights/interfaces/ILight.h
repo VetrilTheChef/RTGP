@@ -27,6 +27,9 @@ class ILight
 		// Set the light color (SRGB)
 		virtual void setColor(const glm::vec3 newColor) noexcept = 0;
 
+		// Update the light
+		virtual void update(double deltaSeconds) noexcept = 0;
+
 		// Draw the light object
 		virtual void draw() noexcept = 0;
 

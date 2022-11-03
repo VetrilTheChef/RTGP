@@ -24,9 +24,9 @@ Model::Model(std::unique_ptr<IMesh> newMesh,
 			 glm::vec3 newScale) noexcept :
 	IModel(std::move(newMesh),
 		   std::move(newProgram)),
-	position(newPosition),
-	rotation(newRotation),
-	scale(newScale)
+		   position(newPosition),
+		   rotation(newRotation),
+		   scale(newScale)
 {
 	// Compute the model matrix
 	updateModelMatrix();
@@ -122,6 +122,10 @@ mat4 Model::getModelMatrix() const noexcept
 std::shared_ptr<IShaderProgram> Model::getProgram() const noexcept
 {
 	return program;
+}
+
+void Model::update(double deltaSeconds) noexcept
+{
 }
 
 void Model::render() const noexcept

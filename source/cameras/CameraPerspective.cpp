@@ -33,6 +33,13 @@ CameraPerspective::CameraPerspective(vec3 newPosition,
 	// Compute the projection and view matrices
 	updateProjectionMatrix();
 	updateViewMatrix();
+
+	// Compute the view vector
+	updateViewVector();
+}
+
+CameraPerspective::~CameraPerspective() noexcept
+{
 }
 
 glm::vec3 CameraPerspective::getPosition() const noexcept
@@ -46,6 +53,9 @@ void CameraPerspective::setPosition(const glm::vec3 newPosition) noexcept
 
 	// Update the view matrix
 	updateViewMatrix();
+
+	// Update the view vector
+	updateViewVector();
 }
 
 glm::vec3 CameraPerspective::getRotation() const noexcept
@@ -59,6 +69,9 @@ void CameraPerspective::setRotation(const glm::vec3 newRotation) noexcept
 
 	// Update the view matrix
 	updateViewMatrix();
+
+	// Update the view vector
+	updateViewVector();
 }
 
 float CameraPerspective::getVerticalFOV() const noexcept
@@ -132,20 +145,19 @@ void CameraPerspective::lookAt(const vec3 newTarget, const vec3 newUp) noexcept
 	updateViewMatrix();
 }
 
-mat4 CameraPerspective::getProjectionMatrix() const noexcept
+const glm::mat4 & CameraPerspective::getProjectionMatrix() const noexcept
 {
 	return projectionMatrix;
 }
 
-mat4 CameraPerspective::getViewMatrix() const noexcept
+const glm::mat4 & CameraPerspective::getViewMatrix() const noexcept
 {
 	return viewMatrix;
 }
 
-glm::vec3 CameraPerspective::getViewVector() const noexcept
+const glm::vec3 & CameraPerspective::getViewVector() const noexcept
 {
-	// Return the inverse of the forward vector's direction
-	return -1.0f * forward();
+	return viewVector;
 }
 
 vec3 CameraPerspective::forward() const noexcept
@@ -175,7 +187,11 @@ vec3 CameraPerspective::up() const noexcept
 	return vec3(up);
 }
 
-CameraPerspective::~CameraPerspective() noexcept
+void CameraPerspective::update(double deltaSeconds) noexcept
+{
+}
+
+void CameraPerspective::draw() noexcept
 {
 }
 
@@ -196,6 +212,13 @@ void CameraPerspective::updateViewMatrix()
 {
 	// Precompute a view matrix and save it
 	viewMatrix = glm::lookAt(position, position + forward(), up());
+}
+
+void CameraPerspective::updateViewVector()
+{
+	// Precompute a view vector (the inverse of the forward vector's direction)
+	// and save it
+	viewVector = -1.0f * forward();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

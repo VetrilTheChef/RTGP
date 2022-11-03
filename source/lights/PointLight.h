@@ -22,18 +22,28 @@ class PointLight : public ILight
 
 		~PointLight() noexcept;
 
+		// Get the light position
 		virtual glm::vec3 getPosition() const noexcept override;
 
+		// Set the light position
 		virtual void setPosition(const glm::vec3 newPosition) noexcept override;
 
+		// Get the light intensity
 		virtual float getIntensity() const noexcept override;
 
+		// Set the light intensity
 		virtual void setIntensity(const float newIntensity) noexcept override;
 
+		// Get the light color (SRGB)
 		virtual glm::vec3 getColor() const noexcept override;
 
+		// Set the light color (SRGB)
 		virtual void setColor(const glm::vec3 newColor) noexcept override;
 
+		// Update the light
+		virtual void update(double deltaSeconds) noexcept override;
+
+		// Draw the light object
 		virtual void draw() noexcept override;
 
 	protected:

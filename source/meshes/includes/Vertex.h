@@ -19,6 +19,6 @@ struct Vertex {
 	// Bitangent
 	glm::vec3 Bitangent {};
 
-	// UVs (multiple channels)
-	std::vector<glm::vec2> TexCoords{};
+	// UVs
+	glm::vec2 TexCoords {};
 };
